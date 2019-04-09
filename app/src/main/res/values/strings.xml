@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright 2016 Google Inc.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<resources>
+  <string name="app_name">Mission Rehearsal</string>
+  <string name="fit_image_to_scan">Fit image to scan</string>
+
+  <string name="menu_selectfile">Open Mission</string>
+  <string name="menu_deletefile">Delete Mission (WIP)</string>
+  <string name="menu_exit">Exit</string>
+
+  <string name="empty_no_files">No mission CSV files</string>
+  <string name="info_filecopy">Mission file copied</string>
+  <string name="error_filemissing">Failed to copy missing mission file</string>
+  <string name="error_filecopy">Failed to copy mission</string>
+</resources>
