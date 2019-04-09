@@ -20,7 +20,7 @@ android {
         applicationId "com.google.ar.sceneform.samples.augmentedimage"
 
         // Sceneform requires minSdkVersion >= 24.
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

@@ -12,7 +12,7 @@ This app does _**Not**_ use Unity; instead using Android branch.
   * CSV, comma-separated. Team members are semi-colon (;) separated
 * File chooser for mission CSV files.
   * It copies chosen file and overrides the main file.
-  * Ideally, send 'Intent' back to main app and everyone in future.
+  * Sends result (file path) back to main app now, and everyone in future.
 * TODO: alternate file selection via scanning QR code, using ZXing library
   * QR code string of the form: `file:///<path>`
     * e.g.: `file:///mission1.csv`
@@ -32,7 +32,7 @@ This app does _**Not**_ use Unity; instead using Android branch.
 * ZXing library is slow; scans sometimes take a long time and fails.
   * Alternate com.google.android.gms.vision library did Not work.
 
-### Solved
+### Solved / Notes
 * When using `android.support.constraint.ConstraintLayout`, errors encountered complaining of attributes not found, like: `layout_constraintLeft_toLeftOf`
   * Solution: add the following dependency to app's `build.gradle` file:
     * `implementation 'com.android.support.constraint:constraint-layout:1.1.3'`
@@ -43,9 +43,11 @@ This app does _**Not**_ use Unity; instead using Android branch.
     * Do a rebuild. I.e. must clean gradle and resync.
     * If that fails, check and ensure you are Not using **gradle version 3.3.0**! Use this instead in project's `build.gradle` file:
       * `classpath 'com.android.tools.build:gradle:3.2.1'`
+* `Files.readAllBytes` requires minimum API Level 26, which is set in  app's `build.gradle`.
 
 ## TODO
 * Parse mission file.
+  * Add sample route waypoints.
 * Integrate ZXing QR code scanner app.
   * Got it working separately.
   * How to share usage of Camera without exploding?

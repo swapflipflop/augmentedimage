@@ -26,4 +26,6 @@
   <string name="info_filecopy">Mission file copied</string>
   <string name="error_filemissing">Failed to copy missing mission file</string>
   <string name="error_filecopy">Failed to copy mission</string>
+
+  <string name="error_no_mission">No mission file</string>
 </resources>

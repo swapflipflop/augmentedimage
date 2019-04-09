@@ -2,13 +2,11 @@ package org.ds;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 
 import com.google.ar.sceneform.samples.augmentedimage.R;
 
-import org.ds.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -186,12 +183,8 @@ public class FileChooser extends ListActivity {
                     .setIcon(R.drawable.icon)
                     .setTitle("[" + file.getName() + "] folder can't be read!")
                     .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-                            }
+                        (dialog, which) -> {
+                            // TODO Auto-generated method stub
                         }).show();
             }
         }
@@ -201,7 +194,7 @@ public class FileChooser extends ListActivity {
             {
                 m_bChildActive = true;
                 selectFile(filepath);
-                finish();
+                finishOk();
             }
         }
     }
@@ -225,15 +218,15 @@ public class FileChooser extends ListActivity {
             case MENUITEM_SELECTFILE:
             {
                 selectFile(path.get((int) getSelectedItemId()));
-                finish();
+                finishOk();
                 return true;
             }
             case MENUITEM_DELETEFILE:
                 deleteSelectedFile(path.get((int) getSelectedItemId()));
-                finish();
+                finishOk();
                 return true;
             case MENUITEM_EXIT:
-                finish();
+                finishAbort();
                 return true;
         }
 
@@ -257,7 +250,7 @@ public class FileChooser extends ListActivity {
                 synchronized(syncLock)
                 {
                     selectFile(path.get((int) ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).id));
-                    finish();
+                    finishOk();
                     return true;
                 }
             }
@@ -266,7 +259,7 @@ public class FileChooser extends ListActivity {
                 synchronized(syncLock)
                 {
                     deleteSelectedFile(path.get((int) ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).id));
-                    finish();
+                    finishOk();
                     return true;
                 }
             }
@@ -461,5 +454,21 @@ public class FileChooser extends ListActivity {
             return true; //nothing to delete; file does Not exists
         }
         return selection.delete();
+    }
+
+    public void finishOk()
+    {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(KEY_FILEPATH, lastSelectedFile);
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
+    public void finishAbort()
+    {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(KEY_FILEPATH, lastSelectedFile);
+        setResult(RESULT_CANCELED, returnIntent);
+        finish();
     }
 }

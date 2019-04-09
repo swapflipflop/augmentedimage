@@ -5,6 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -215,5 +219,20 @@ public class FileUtils {
                 destination.close();
             }
         }
+    }
+
+    public static String readFile(String path, Charset encoding)
+    {
+        try {
+            byte[] encoded = Files.readAllBytes(Paths.get(path));
+            return new String(encoded, encoding);
+        }
+        catch (IOException ex) {
+            return "";
+        }
+    }
+
+    public static String readFile(String path) {
+        return readFile(path, StandardCharsets.UTF_8);
     }
 }
