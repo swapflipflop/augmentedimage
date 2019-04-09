@@ -1,8 +1,8 @@
-BANANA,00:00:30,ALPHA,Adam;Arthur;Abigail;Angel
-BANANA,00:00:30,BRAVO,Bella;Bobby;Brody;Benny
-BANANA,00:00:30,DELTA,Damien,Danielle,Denny,Deborah
-DURIAN,00:02:00,ALPHA,Adam;Arthur;Abigail;Angel
-PINEAPPLE,00:03:30,BRAVO,Bella;Bobby;Brody;Benny
-COCONUT,00:04:00,DELTA,Damien,Danielle,Denny,Deborah
-PAPAYA,00:06:00,ALPHA,Adam;Arthur;Abigail;Angel
-STRAWBERRY,00:06:00,EPSILON,Abigail;Angel
+BANANA,Primary deck,00:00:30,ALPHA,Adam;Arthur;Abigail;Angel
+BANANA,Primary deck,00:00:30,BRAVO,Bella;Bobby;Brody;Benny
+BANANA,Primary deck,00:00:30,DELTA,Damien,Danielle,Denny,Deborah
+DURIAN,Bridge,00:02:00,ALPHA,Adam;Arthur;Abigail;Angel
+PINEAPPLE,Engine room,00:03:30,BRAVO,Bella;Bobby;Brody;Benny
+COCONUT,Mess hall,00:04:00,DELTA,Damien,Danielle,Denny,Deborah
+PAPAYA,Brig,00:06:00,ALPHA,Adam;Arthur;Abigail;Angel
+STRAWBERRY,Hold,00:06:00,EPSILON,Abigail;Angel

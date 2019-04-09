@@ -19,7 +19,7 @@
   <string name="fit_image_to_scan">Fit image to scan</string>
 
   <string name="menu_selectfile">Open Mission</string>
-  <string name="menu_deletefile">Delete Mission (WIP)</string>
+  <string name="menu_deletefile">Delete Mission</string>
   <string name="menu_exit">Exit</string>
 
   <string name="empty_no_files">No mission CSV files</string>

@@ -200,15 +200,6 @@ public class FileChooser extends ListActivity {
             synchronized(syncLock)
             {
                 m_bChildActive = true;
-                /*
-                Intent i = new Intent(this, FileUtils.class);
-                i.putExtra(FileChooser.KEY_FILEPATH, filepath);
-                startActivityForResult(i, ACTIVITY_SELECTFILE);
-                Toast toast = Toast.makeText(this, "Selected: " + filepath, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                setLastSelectedFile(filepath);
-                */
                 selectFile(filepath);
                 finish();
             }
@@ -233,31 +224,14 @@ public class FileChooser extends ListActivity {
         {
             case MENUITEM_SELECTFILE:
             {
-                /*
-                synchronized(syncLock)
-                {
-                    if (m_bChildActive) return true;
-                    m_bChildActive = true;
-                    Intent i = new Intent(this, FileUtils.class);
-                    i.putExtra(FileChooser.KEY_FILEPATH, strStartPath); //path.get((int) getSelectedItemId()));
-                    startActivityForResult(i, ACTIVITY_SELECTFILE);
-                    return true;
-                }
-                */
                 selectFile(path.get((int) getSelectedItemId()));
-                break;
+                finish();
+                return true;
             }
             case MENUITEM_DELETEFILE:
-                /*
-                synchronized(syncLock)
-                {
-                    if (m_bChildActive) return true;
-                    m_bChildActive = true;
-                    Intent i = new Intent(this, SecureEraseView.class);
-                    i.putExtra(FileChooser.KEY_FILEPATH, strStartPath); //path.get((int) getSelectedItemId()));
-                    startActivityForResult(i, ACTIVITY_DELETEFILE);
-                    return true;
-                }*/ break;
+                deleteSelectedFile(path.get((int) getSelectedItemId()));
+                finish();
+                return true;
             case MENUITEM_EXIT:
                 finish();
                 return true;
@@ -282,30 +256,19 @@ public class FileChooser extends ListActivity {
             {
                 synchronized(syncLock)
                 {
-                    /*
-                    if (m_bChildActive) return true;
-                    m_bChildActive = true;
-                    Intent i = new Intent(this, FileUtils.class);
-                    i.putExtra(FileChooser.KEY_FILEPATH, path.get((int) ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).id));
-                    startActivityForResult(i, ACTIVITY_SELECTFILE);
-                    */
                     selectFile(path.get((int) ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).id));
+                    finish();
                     return true;
                 }
             }
             case MENUITEM_DELETEFILE2:
             {
-                /*
                 synchronized(syncLock)
                 {
-                    if (m_bChildActive) return true;
-                    m_bChildActive = true;
-                    Intent i = new Intent(this, SecureEraseView.class);
-                    i.putExtra(FileChooser.KEY_FILEPATH, path.get((int) ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).id));
-                    startActivityForResult(i, ACTIVITY_DELETEFILE);
+                    deleteSelectedFile(path.get((int) ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).id));
+                    finish();
                     return true;
                 }
-                */ break;
             }
         }
         return super.onContextItemSelected(item);
@@ -463,6 +426,7 @@ public class FileChooser extends ListActivity {
     ////////////////
     //// Action methods
     ////////
+
     /**
      * Copies selected file and make it our designated app file in pathHome.
      **/
@@ -484,5 +448,18 @@ public class FileChooser extends ListActivity {
         {
             showStatus(R.string.error_filecopy);
         }
+    }
+
+    /**
+     * Copies selected file and make it our designated app file in pathHome.
+     **/
+    public boolean deleteSelectedFile(String selectedFile)
+    {
+        File selection = new File(selectedFile);
+        if (!selection.exists())
+        {
+            return true; //nothing to delete; file does Not exists
+        }
+        return selection.delete();
     }
 }
