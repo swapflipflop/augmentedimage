@@ -101,67 +101,64 @@ public class FileChooser extends ListActivity {
         //m_Detector = new GestureDetector(this,this);	//TRY GESTURE
         registerForContextMenu(getListView());
 
-        myPath = (TextView)findViewById(R.id.path);
-        getDir(strStartPath);
+        myPath = findViewById(R.id.path);
+        getDir(pathHome.exists()? pathHome.getPath(): strStartPath);
     }
 
     private void getDir(String dirPath)
     {
         strNewPath = dirPath;
-        Thread t = new Thread()
-        {
-            public void run()
+        //exit run
+        Thread t = new Thread(() -> {
+            synchronized(syncLock)
             {
-                synchronized(syncLock)
+                if (itemNew != null)
+                    itemNew.clear();
+                else
+                    itemNew = new ArrayList<String>();
+                if (pathNew != null)
+                    pathNew.clear();
+                else
+                    pathNew = new ArrayList<String>();
+
+                File f = new File(strNewPath);
+                File[] files = FileUtils.sortDir1st(f.listFiles());
+
+                if(!strNewPath.equals(root))
                 {
-                    if (itemNew != null)
-                        itemNew.clear();
-                    else
-                        itemNew = new ArrayList<String>();
-                    if (pathNew != null)
-                        pathNew.clear();
-                    else
-                        pathNew = new ArrayList<String>();
+                    itemNew.add(root);
+                    pathNew.add(root);
 
-                    File f = new File(strNewPath);
-                    File[] files = FileUtils.sortDir1st(f.listFiles());
+                    itemNew.add("../");
+                    pathNew.add(f.getParent());
+                }
 
-                    if(!strNewPath.equals(root))
+                if (files != null)
+                {
+                    boolean bNotEmpty = false;
+                    for(File file: files)
                     {
-                        itemNew.add(root);
-                        pathNew.add(root);
-
-                        itemNew.add("../");
-                        pathNew.add(f.getParent());
+                        if (file.isDirectory() || FileUtils.isSupportedFile(file))
+                        {
+                            pathNew.add(file.getPath());
+                            if(file.isDirectory())
+                                itemNew.add(file.getName() + "/");
+                            else
+                                itemNew.add(file.getName());
+                            bNotEmpty = true;
+                        }
+                        //else continue; //ignore non-picture files
                     }
-
-                    if (files != null)
+                    if (bNotEmpty)
                     {
-                        boolean bNotEmpty = false;
-                        for(File file: files)
-                        {
-                            if (file.isDirectory() || FileUtils.isSupportedFile(file))
-                            {
-                                pathNew.add(file.getPath());
-                                if(file.isDirectory())
-                                    itemNew.add(file.getName() + "/");
-                                else
-                                    itemNew.add(file.getName());
-                                bNotEmpty = true;
-                            }
-                            //else continue; //ignore non-picture files
-                        }
-                        if (bNotEmpty)
-                        {
-                            m_HandlerUI.sendEmptyMessage(UI_SWAP_IN_NEW_LIST);
-                            return;
-                        }
+                        m_HandlerUI.sendEmptyMessage(UI_SWAP_IN_NEW_LIST);
+                        return;
                     }
-                    //else
-                    m_HandlerUI.sendEmptyMessage(UI_TOAST_NO_VALID_FILES);
-                } //exit sync
-            } //exit run
-        };
+                }
+                //else
+                m_HandlerUI.sendEmptyMessage(UI_TOAST_NO_VALID_FILES);
+            } //exit sync
+        });
         t.start();
     }
 
@@ -292,13 +289,12 @@ public class FileChooser extends ListActivity {
         {
             getDir(savedInstanceState.getString(KEY_FILEPATH));
         }
-        return;
     }
 
     ////////////////
     //// Save/restore methods
     ////////
-
+/*
     @Override
     protected void onPause()
     {
@@ -310,7 +306,7 @@ public class FileChooser extends ListActivity {
     {
         super.onResume();
     }
-
+*/
     ////////////////
     //// Event listener methods
     ////////
@@ -326,7 +322,6 @@ public class FileChooser extends ListActivity {
         super.onBackPressed();
     }
 
-    //TRY GESTURE
 	/*	@Override
 	public boolean onTouchEvent(MotionEvent me){
 		m_Detector.onTouchEvent(me);
@@ -335,14 +330,12 @@ public class FileChooser extends ListActivity {
 
 	@Override
 	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -356,25 +349,20 @@ public class FileChooser extends ListActivity {
 	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void onShowPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

@@ -91,7 +91,7 @@ public class FileUtils {
     }
 
     /*
-     * expandFolder to get at least one pic or all pics
+     * expandFolder to get at least one file or all files
      */
     public Vector<File> expandFolder(File sourceDir,
                                      boolean bAtLeastOne)
@@ -103,7 +103,7 @@ public class FileUtils {
     }
 
     /*
-     * expandFolder to get at least one pic or all pics
+     * expandFolder to get at least one file or all files
      *
      * @param nStartIndex	index of folder to expand
      * @param v				container for files, must not be null
