@@ -16,12 +16,28 @@ This app does _**Not**_ use Unity; instead using Android branch.
 * TODO: alternate file selection via scanning QR code, using ZXing library
   * QR code string of the form: `file:///<path>`
     * e.g.: `file:///mission1.csv`
+* Spawns one of the ship layers as well as image frame corners. The layer is huge! (and opaque).
 
 ### Resources
 * Sample QR codes in `app\sampledata\images\qr`.
   * Those ending b.png have logos in the middle. You can photoshop in any icon without ruining the QR code.
 * Sample mission files in `app\sampledata\Missions`.
 * Use this site for editing .md files: https://dillinger.io/
+* Branch only. The 1st set of ship layers.
+  * Raw OBJ & MTL file sets in `app\sampledata\modeldata\Ship\Ship Layers`
+  * Converted to SFB (SceneForm Asset) in `app\src\main\assets\models` using Google Sceneform Tools plugin from within Android Studio.
+    * Refer to guide @ https://mobikul.com/how-to-generate-sfb-model-from-obj-files-for-arcore/
+    * In case the above page disappears, the steps are roughly:
+      * In Android Studio, select File menu> Settings> Plugins.
+        * Search for and install 'Google Sceneform Tools' plugin.
+      * Place your source OBJ & MTL files in `app\sampledata`.
+      * Return to Android Studio's project panel.
+        * Select an OBJ file from `app\sampledata`, right-click select (1st command) 'Import Sceneform Asset'.
+        * Change the output path if needed. E.g.: from default `app\src\main\assets\` to `app\src\main\assets\models`.
+        * Click 'Finish' button to convert.
+          * If it succeeds, you'll get a corresponding SFA file created. It can then be used in the ARCore app.
+          * If it fails (e.g. missing MTL file in the set), it will ask if you would like to revert. Revert. 
+      * In this app, the SFAs are loaded in AugmentedImageNode.java.
 
 ## Issues
 
@@ -31,6 +47,16 @@ This app does _**Not**_ use Unity; instead using Android branch.
   * Presume there will be a way to 'import' android activities in Unity, for merging codes.
 * ZXing library is slow; scans sometimes take a long time and fails.
   * Alternate com.google.android.gms.vision library did Not work.
+* Wasn't able to configure/build correctly with either version of Node.JS for mobile. They are:
+  * J2V8: https://github.com/eclipsesource/J2V8
+    * Build issues:
+      * unable to build in Windows 7, owing to clang/docker or other missing tools.
+      * able to build in Centos (Linux), but unable to load in Android app, owing to missing static symbols.
+      * unable to build in Ubuntu 18 (Linux), owing to Docker error - can't seem to reach docker registry. J2V8 uses docker containers for cross-platform compilation.
+  * Node.JS mobile: https://github.com/janeasystems/nodejs-mobile
+    * pre-built binaries provided, but unable to setup Android project correctly to incorporate it. Errors like:
+      * configuration: wrong gradle/cmake versions/CMakeLists.txt.
+      * compiler unable to find system include files!? <memory>, etc.
 
 ### Solved / Notes
 * When using `android.support.constraint.ConstraintLayout`, errors encountered complaining of attributes not found, like: `layout_constraintLeft_toLeftOf`
