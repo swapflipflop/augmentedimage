@@ -45,6 +45,7 @@ public class AugmentedImageNode extends AnchorNode {
   private static CompletableFuture<ModelRenderable> urCorner;
   private static CompletableFuture<ModelRenderable> lrCorner;
   private static CompletableFuture<ModelRenderable> llCorner;
+  private static CompletableFuture<ModelRenderable> renShipLayers;
 
   public AugmentedImageNode(Context context) {
     // Upon construction, start loading the models for the corners of the frame.
@@ -65,6 +66,10 @@ public class AugmentedImageNode extends AnchorNode {
           ModelRenderable.builder()
               .setSource(context, Uri.parse("models/frame_lower_right.sfb"))
               .build();
+      renShipLayers =
+          ModelRenderable.builder()
+              .setSource(context, Uri.parse("models/2ndDeck.sfb"))
+              .build();
     }
   }
 
@@ -79,8 +84,9 @@ public class AugmentedImageNode extends AnchorNode {
     this.image = image;
 
     // If any of the models are not loaded, then recurse when all are loaded.
-    if (!ulCorner.isDone() || !urCorner.isDone() || !llCorner.isDone() || !lrCorner.isDone()) {
-      CompletableFuture.allOf(ulCorner, urCorner, llCorner, lrCorner)
+    if (!ulCorner.isDone() || !urCorner.isDone() || !llCorner.isDone() || !lrCorner.isDone()
+      || !renShipLayers.isDone()) {
+      CompletableFuture.allOf(ulCorner, urCorner, llCorner, lrCorner, renShipLayers)
           .thenAccept((Void aVoid) -> setImage(image))
           .exceptionally(
               throwable -> {
@@ -123,6 +129,13 @@ public class AugmentedImageNode extends AnchorNode {
     cornerNode.setParent(this);
     cornerNode.setLocalPosition(localPosition);
     cornerNode.setRenderable(llCorner.getNow(null));
+
+    // Middle
+    localPosition.set(image.getExtentX(), 0.0f, image.getExtentZ());
+    cornerNode = new Node();
+    cornerNode.setParent(this);
+    cornerNode.setLocalPosition(localPosition);
+    cornerNode.setRenderable(renShipLayers.getNow(null));
   }
 
   public AugmentedImage getImage() {

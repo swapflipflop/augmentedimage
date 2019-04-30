@@ -24,6 +24,10 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
     }
     // Sceneform libraries use language constructs from Java 8.
     // Add these compile options if targeting minSdkVersion < 26.
@@ -53,6 +57,8 @@ dependencies {
 
     // Use the Sceneform UX Package built from the source files included in the sceneformux folder.
     //api project(":sceneformux")
+
+    compile(name:'j2v8', ext:'aar')
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
@@ -76,3 +82,59 @@ sceneform.asset('sampledata/models/frame_upper_right.obj',
         'default',
         'sampledata/models/frame_upper_right.sfa',
         'src/main/assets/models/frame_upper_right')
+
+
+sceneform.asset('sampledata/models/Ship/ShipLayers.obj',
+        'default',
+        'sampledata/models/Ship/ShipLayers.sfa',
+        'src/main/assets/ShipLayers')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/2ndDeck.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/2ndDeck.sfa',
+        'src/main/assets/models/2ndDeck')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/3rdDeck.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/3rdDeck.sfa',
+        'src/main/assets/models/3rdDeck')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/4thDeck.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/4thDeck.sfa',
+        'src/main/assets/models/4thDeck')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/Deck5.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/Deck5.sfa',
+        'src/main/assets/model/Deck5')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/Deck6.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/Deck6.sfa',
+        'src/main/assets/model/Deck6')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/Deck7.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/Deck7.sfa',
+        'src/main/assets/model/Deck7')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/BoatDeck.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/BoatDeck.sfa',
+        'src/main/assets/models/BoatDeck')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/ForeCastleDeck.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/ForeCastleDeck.sfa',
+        'src/main/assets/models/ForeCastleDeck')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/MainDeck.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/MainDeck.sfa',
+        'src/main/assets/models/MainDeck')
+
+sceneform.asset('sampledata/models/Ship/Ship Layers/PlatformDeck.obj',
+        'default',
+        'sampledata/models/Ship/Ship Layers/PlatformDeck.sfa',
+        'src/main/assets/models/PlatformDeck')

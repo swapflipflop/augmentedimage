@@ -50,10 +50,12 @@
         android:screenOrientation="portrait"
         android:label="@string/app_name">
       <intent-filter>
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <category android:name="android.intent.category.LAUNCHER" />
+        <action android:name="android.intent.action.SEND" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <!--
         <category android:name="com.samsung.android.intent.category.PENWINDOW_LAUNCHER" />
         <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+        -->
       </intent-filter>
       <meta-data android:name="com.samsung.android.sdk.multiwindow.penwindow.enable" android:value="true" />
       <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />

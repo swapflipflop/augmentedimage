@@ -25,12 +25,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.eclipsesource.v8.NodeJS;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
 import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.samples.common.helpers.SnackbarHelper;
 import com.google.ar.sceneform.ux.ArFragment;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +85,31 @@ public class AugmentedImageActivity extends AppCompatActivity {
         butQrOpen = findViewById(R.id.but_qropen);
         butQrOpen.setEnabled(true);
         butQrOpen.setOnClickListener(this::onQrOpen);
+
+        //runScript();
+    }
+
+    private void runScript() {
+        NodeJS nodeJS = NodeJS.createNodeJS();
+        try {
+            File script = createTempScript("console.log(\"Hello NodeJS\")");
+
+            nodeJS.exec(script);
+
+            script.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            nodeJS.release();
+        }
+    }
+
+    private File createTempScript(String script) throws IOException {
+        File file = File.createTempFile("temp",".js", getCacheDir());
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write(script);
+        fileWriter.close();
+        return file;
     }
 
     @Override

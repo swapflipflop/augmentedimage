@@ -34,6 +34,9 @@ allprojects {
         google()
         jcenter()
         mavenLocal()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
